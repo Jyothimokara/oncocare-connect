@@ -367,11 +367,11 @@ export default function BookAppointmentScreen() {
         <View style={[styles.formLayout, isDesktop && styles.desktopFormLayout]}>
           
           {/* Left / Main Section: Select Doctor and Date/Time */}
-          <View style={styles.mainSection}>
+          <View style={[styles.mainSection, isDesktop && styles.desktopMainSection]}>
             <Text style={styles.sectionTitle}>1. Select Oncologist</Text>
             {renderDoctorList()}
 
-            <Text style={styles.sectionTitle}>2. Choose Date & Time</Text>
+            <Text style={[styles.sectionTitle, { marginTop: Spacing.xlarge }]}>2. Choose Date & Time</Text>
             <DashboardCard style={styles.dateTimeCard}>
               
               {/* Polished Date Picker Field */}
@@ -526,27 +526,31 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     padding: Spacing.large,
+    paddingBottom: Spacing.xxlarge,
   },
   formLayout: {
     flexDirection: 'column',
     width: '100%',
-    gap: Spacing.xlarge,
   },
   desktopFormLayout: {
     flexDirection: 'row',
     alignItems: 'flex-start',
+    gap: Spacing.xlarge,
   },
   mainSection: {
-    flex: 1.2,
     width: '100%',
+    flexShrink: 0,
   },
   sideSection: {
-    flex: 0.9,
     width: '100%',
+    flexShrink: 0,
+    marginTop: Spacing.xlarge,
   },
   desktopSideSection: {
-    position: 'sticky',
-    top: 90,
+    // On desktop (row layout) the marginTop from sideSection is overridden;
+    // sticky positioning is web-only and not applied in RN.
+    flex: 1,
+    marginTop: 0,
   },
   sectionTitle: {
     fontFamily: Typography.fontFamily,
@@ -554,6 +558,9 @@ const styles = StyleSheet.create({
     fontWeight: Typography.weights.bold as any,
     color: Colors.text,
     marginBottom: Spacing.medium,
+  },
+  desktopMainSection: {
+    flex: 1.2,
   },
   loaderContainer: {
     padding: Spacing.large,
@@ -728,6 +735,7 @@ const styles = StyleSheet.create({
     marginTop: Spacing.tiny,
   },
   disabledSlotsContainer: {
+    minHeight: 88,
     padding: Spacing.large,
     alignItems: 'center',
     justifyContent: 'center',
@@ -766,8 +774,9 @@ const styles = StyleSheet.create({
   slotsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: Spacing.small,
     width: '100%',
+    marginTop: -Spacing.small,
+    marginLeft: -Spacing.small,
   },
   slotBadge: {
     paddingVertical: Spacing.small + 2,
@@ -776,9 +785,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.border,
     backgroundColor: Colors.surface,
-    minWidth: '28%',
     alignItems: 'center',
-    flexGrow: 1,
+    marginTop: Spacing.small,
+    marginLeft: Spacing.small,
   },
   slotBadgeActive: {
     backgroundColor: Colors.primary,
